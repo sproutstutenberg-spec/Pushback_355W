@@ -17,15 +17,34 @@ void auto_left_blue(){
 
     }
 
-    driveFor(40,-2.2*360);
+  
+//Drive forward
+      driveFor(30,-24.0);
 
-
-
-    GyroTurnRight(20,80,5);
-
+ // wait(2,seconds);
+//turn 90 degrees to the left
+  GyroTurnLeft(20,90,5);
     
+//  wait(2,seconds);
+//Drive forward and hit the scorer
+  drive(-20,7);
+
+//  wait(2,seconds);
+//Dispense the ball
+   ConveyorBelt.spin(forward,90,percent);
+
+   BackRoller.spin(reverse,90,percent); 
+
+    wait(10,seconds);
+
+   ConveyorBelt.stop();
+
+   BackRoller.stop();
 
 }
+
+
+
 
 
 
@@ -34,11 +53,31 @@ void auto_right_blue(){
 
   while(1==1){
 
-        if(!MyGyro.isCalibrating()) break;
+    if(!MyGyro.isCalibrating()) break;
 
-    }
+  }
+//drive forward
+  driveFor(30,-24.0);
 
+ // wait(2,seconds);
+//Turn to the left
+  GyroTurnLeft(20,75,5);
     
+//  wait(2,seconds);
+//drive forward and hit the goal
+  drive(-20,4);
+
+//  wait(2,seconds);
+//Dispense the ball
+   ConveyorBelt.spin(forward,90,percent);
+
+   BackRoller.spin(reverse,90,percent); 
+
+    wait(2,seconds);
+
+   ConveyorBelt.stop();
+
+   BackRoller.stop();
 
 }
 
@@ -52,11 +91,34 @@ void auto_right_red(){
         if(!MyGyro.isCalibrating()) break;
 
     }
+    //drive forward
+ driveFor(30,-24.0);
 
-   
+ // wait(2,seconds);
+//turn left 90 degrees
+  GyroTurnLeft(20,83,5);
+    
+//  wait(2,seconds);
+//drive forward and hit the goal
+  drive(-20,7);
+
+//  wait(2,seconds);
+//dispense the ball
+   ConveyorBelt.spin(forward,90,percent);
+
+   BackRoller.spin(reverse,90,percent); 
+
+    wait(10,seconds);
+
+   ConveyorBelt.stop();
+
+   BackRoller.stop();
 
 }
+   
 
+
+void auto_dummy(){}
 
 
 void auto_left_red(){
@@ -66,7 +128,32 @@ void auto_left_red(){
         if(!MyGyro.isCalibrating()) break;
 
     }
+//drive forward
+    driveFor(30,-24.0);
 
-   
+ // wait(2,seconds);
+//turn 90 degrees left
+  GyroTurnLeft(20,-90,5);
+    
+//  wait(2,seconds);
+//drive forward and hit the goal
+  drive(-20,7);
 
+//  wait(2,seconds);
+//dispense the ball
+   ConveyorBelt.spin(forward,90,percent);
+
+   BackRoller.spin(reverse,90,percent); 
+
+    wait(10,seconds);
+
+   ConveyorBelt.stop();
+
+   BackRoller.stop();
+
+}
+
+void auto_skills(){
+  driveFor(50,6);
+  driveFor(40,-40);
 }

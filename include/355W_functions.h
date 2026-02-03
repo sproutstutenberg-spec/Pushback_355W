@@ -6,8 +6,14 @@
 
 using namespace vex;
 
-void driveFor(int power, float deg)
+void driveFor(int power, float distance)
 {
+  float diameter= 3.25; //inches
+  
+  float degR =  distance/diameter;  // radians
+
+  float deg = degR*180.0/3.1416;
+
 
   // Tell the motor what power/velocity it should drive at
   LeftFront.setVelocity(power, percent);
@@ -27,6 +33,44 @@ void driveFor(int power, float deg)
   RightMiddle.spinFor(deg, degrees, false);
   LeftBack.spinFor(deg, degrees, false);
   RightBack.spinFor(deg, degrees, true);
+
+  // turn motors off
+  LeftFront.stop();
+  RightFront.stop();
+  LeftMiddle.stop();
+  RightMiddle.stop();
+  LeftBack.stop();
+  RightBack.stop();
+
+  // wait a bit then exit
+  wait(10, msec);
+}
+
+void drive(int power, float time)
+{
+
+
+
+  // Tell the motor what power/velocity it should drive at
+  LeftFront.setVelocity(power, percent);
+  RightFront.setVelocity(power, percent);
+  LeftMiddle.setVelocity(power, percent);
+  RightMiddle.setVelocity(power, percent);
+  LeftBack.setVelocity(power, percent);
+  RightBack.setVelocity(power, percent);
+
+  // Its turning on the motor and telling it to stay
+  // on until the motor rotat3es a certain number of degrees
+  // The false/true tells the robot to excecute all comands
+  //  at the same time until it reaches the end (true)
+  LeftFront.spin(forward,power,percent);
+  RightFront.spin(forward,power,percent);
+  LeftMiddle.spin(forward,power,percent);
+  RightMiddle.spin(forward,power,percent);
+  LeftBack.spin(forward,power,percent);
+  RightBack.spin(forward,power,percent);
+
+  wait(time,seconds);
 
   // turn motors off
   LeftFront.stop();
@@ -86,11 +130,11 @@ void turn(int dir, int power, float time)
 void GyroTurnLeft(float speed, float angle, float TargetError)
 {
 
-  //   float xgyroInit = MyGyro.angle();
+  float xgyroInit = MyGyro.angle();
 
-  //   float target_angle = xgyroInit - angle;
+  float target_angle = xgyroInit - angle;
 
-  //   if(target_angle<0) target_angle = target_angle + 360;
+  if(target_angle<0) target_angle = target_angle + 360;
 
   // right turn
   LeftFront.spin(reverse, speed, percent);
@@ -105,11 +149,11 @@ void GyroTurnLeft(float speed, float angle, float TargetError)
 
     //        std::cout<< MyGyro.angle()<< std::endl;
 
-    //      float xgyro = MyGyro.angle();
+    float xgyro = MyGyro.angle();
 
-    //       float error = xgyro-target_angle;
+    float error = xgyro-target_angle;
 
-    //       if(std::abs(error) < TargetError) break;
+    if(std::abs(error) < TargetError) break;
 
     //        std::cout<<"xgyro = " << xgyro <<", " << "error = " << error << std::endl;
 
@@ -228,7 +272,7 @@ void Drivetrain(){
 
 
     if(a23*a23 > t23){
-      FrontIntake.spin(forward,0.75*a23,percent); 
+      FrontIntake.spin(forward,0.9*a23,percent); 
     }else{
       FrontIntake.stop();
     }
@@ -243,19 +287,31 @@ void Drivetrain(){
     }
 
     if(a22*a22 > t22){
-      BackRoller.spin(forward,0.75*a23,percent); 
+      BackRoller.spin(forward,0.95*a23,percent); 
     }else{
       BackRoller.stop();
     }
     
-
-    if(driveController2.ButtonL2.pressing()){ 
-      BackRoller.spin(reverse,90,percent);
+//L1 button backroller forward
+if(driveController2.ButtonL1.pressing()||driveController2.ButtonL2.pressing()){ 
     
-    }else{
-      BackRoller.stop();
-
+  if(driveController2.ButtonL1.pressing()){ 
+      BackRoller.spin(reverse,90,percent);
+  
     }   
+//L2 button backroller reverse
+    if(driveController2.ButtonL2.pressing()){ 
+      BackRoller.spin(forward,90,percent);
+    
+
+    }
+  }else{
+      BackRoller.stop();
+  }   
+  
+    
+
+
 
     if(driveController1.ButtonL1.PRESSED){ 
       Scraper.set(true);  //extend
