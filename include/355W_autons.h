@@ -152,8 +152,51 @@ void auto_left_red(){
    BackRoller.stop();
 
 }
+void auto_skills_park(){
 
+  while(1==1){
+
+    if(!MyGyro.isCalibrating()) break;
+
+  }
+drive(30,.3);
+wait(.5,seconds);
+drive(-50,2);
+}
+
+/* this is the big one */
 void auto_skills(){
-  driveFor(50,6);
-  driveFor(40,-40);
+
+    while(1==1){
+
+        if(!MyGyro.isCalibrating()) break;
+
+    }
+ //Drive forward
+      driveFor(40,-50.0);
+  
+
+ // wait(2,seconds);
+//turn 90 degrees to the left
+  GyroTurnRight(30,88,3);
+    
+  wait(.01,seconds);
+//Drive forward and hit the scorer
+      drive(-40,3);
+
+//  wait(2,seconds);
+//Dispense the ball
+   ConveyorBelt.spin(forward,90,percent);
+
+   BackRoller.spin(reverse,90,percent); 
+
+    wait(3,seconds);
+
+   ConveyorBelt.stop();
+
+   BackRoller.stop();
+   
+  Scraper.set(true);
+
+  drive(40,3);
 }

@@ -172,11 +172,11 @@ void GyroTurnLeft(float speed, float angle, float TargetError)
 void GyroTurnRight(float speed, float angle, float TargetError)
 {
 
-  // float xgyroInit = MyGyro.angle();
+   float xgyroInit = MyGyro.angle();
 
-  // float target_angle = xgyroInit + angle;
+   float target_angle = xgyroInit + angle;
 
-  //   if(target_angle>360) target_angle = target_angle - 360;
+     if(target_angle>360) target_angle = target_angle - 360;
 
   // right turn
   LeftFront.spin(forward, speed, percent);
@@ -191,11 +191,11 @@ void GyroTurnRight(float speed, float angle, float TargetError)
 
     // std::cout<< MyGyro.angle()<< std::endl;
 
-    //  float xgyro = MyGyro.angle();
+      float xgyro = MyGyro.angle();
 
-    //  float error = xgyro-target_angle;
+      float error = xgyro-target_angle;
 
-    //    if(std::abs(error) < TargetError) break;
+        if(std::abs(error) < TargetError) break;
 
     // std::cout<<"xgyro = " << xgyro <<", " << "ygyro = " << ygyro << std::endl;
 
@@ -242,6 +242,10 @@ void Drivetrain(){
     a3 = driveController1.Axis3.position();
     a1 = driveController1.Axis1.position();
 
+     /***********************
+      * This is the block for forward, backward, turn
+      * ************************ */ 
+
     if(a3*a3 > t3 || a1*a1 > t1){  //either going straight or turning
 
       // this combination of a3 and a1 values will do the correct thing 
@@ -271,13 +275,15 @@ void Drivetrain(){
 
 
 
+    /*  This is the front intake block*/
+
     if(a23*a23 > t23){
       FrontIntake.spin(forward,0.9*a23,percent); 
     }else{
       FrontIntake.stop();
     }
     
-
+    /* this is the converyor belt block*/
 
     if(driveController2.ButtonR1.pressing()){ 
       ConveyorBelt.spin(forward,90,percent);
@@ -286,20 +292,23 @@ void Drivetrain(){
       ConveyorBelt.stop();
     }
 
+    /* this is the block for the vack roller*/
+
     if(a22*a22 > t22){
       BackRoller.spin(forward,0.95*a23,percent); 
     }else{
       BackRoller.stop();
     }
     
-//L1 button backroller forward
-if(driveController2.ButtonL1.pressing()||driveController2.ButtonL2.pressing()){ 
+    /*  This is the block for the back roller */
+    //L1 button backroller forward
+    if(driveController2.ButtonL1.pressing()||driveController2.ButtonL2.pressing()){ 
     
-  if(driveController2.ButtonL1.pressing()){ 
-      BackRoller.spin(reverse,90,percent);
+      if(driveController2.ButtonL1.pressing()){ 
+        BackRoller.spin(reverse,90,percent);
   
-    }   
-//L2 button backroller reverse
+      }   
+    //L2 button backroller reverse
     if(driveController2.ButtonL2.pressing()){ 
       BackRoller.spin(forward,90,percent);
     
@@ -309,26 +318,28 @@ if(driveController2.ButtonL1.pressing()||driveController2.ButtonL2.pressing()){
       BackRoller.stop();
   }   
   
-    
+   /* end of back roller block */ 
 
-
+    /* scraper block*/
 
     if(driveController1.ButtonL1.PRESSED){ 
       Scraper.set(true);  //extend
-      
-      
+          
     }
     if(driveController1.ButtonR1.PRESSED){
       Scraper.set(false);  //extend
-      
   
     }
-
+    /* end of scraper block*/
    
   }
 }
 
+
+
+
 /*
+
 void Drivetrain()
 {
 
@@ -394,37 +405,42 @@ void Drivetrain()
 
     if (a23 > 0)
     {
-      FrontIntake.spin(forward, 0.75 * a23, percent);
+      FrontIntake.spin(forward, 0.90 * a23, percent);
     }
 
     else if (a22 > 0)
     {
-      FrontIntake.spin(reverse, 0.75 * a22, percent);
+      FrontIntake.spin(reverse, 0.90 * a22, percent);
     }
-
+    else
     {
       FrontIntake.stop(coast);
     }
-  // conveyor belt
-  if (a21 * a21 > t21)
-  {
-    ConveyorBelt.spin(forward, 0.75 * a21, percent);
-  }
-  else
+    // conveyor belt
+    if (a21 * a21 > t21)
+    {
+      ConveyorBelt.spin(forward, 0.90 * a21, percent);
+    }
+    else
+    {
+      ConveyorBelt.stop();
+    }
 
     // Back Roller
 
     if (a20 > 0)
     {
-      BackRoller.spin(forward, 0.75 * a20, percent);
+      BackRoller.spin(forward, 0.90 * a20, percent);
     }
-  // else
+    else if (a19 > 0)
+    {
+      BackRoller.spin(reverse, 0.90 * a19, percent);
+    }
+    else
+    {
+      BackRoller.stop();
 
-  if (a19 > 0)
-  {
-    BackRoller.spin(reverse, 0.75 * a19, percent);
-  }
-  //  else
+    }
 
   // pneumatics
   if (driveController2.ButtonL1.PRESSED)
@@ -438,9 +454,7 @@ void Drivetrain()
   {
     Scraper.set(false);
   }
-  }
-    return;
-}
+ 
 
 
   if(a22*a22 > t22){
@@ -471,4 +485,4 @@ void Drivetrain()
 
 
   }
-*/    
+*/
