@@ -182,7 +182,7 @@ void auto_skills(){
     
   wait(.01,seconds);
 //Drive forward and hit the scorer
-      drive(-40,3);
+      drive(-30,3);
 
 //  wait(2,seconds);
 //Dispense the ball
@@ -198,5 +198,50 @@ void auto_skills(){
    
   Scraper.set(true);
 
-  drive(40,3);
+  drive(30,3);
+    FrontIntake.spin(forward,90,percent);
+
+    ConveyorBelt.spin(forward,90,percent);
+
+   BackRoller.spin(forward,90,percent); 
+
+    wait(5,seconds);
+
+   ConveyorBelt.stop();
+
+   BackRoller.stop();
+
+   FrontIntake.stop();
+
+    drive(-30,3);
+
+     FrontIntake.spin(forward,90,percent);
+
+    ConveyorBelt.spin(forward,90,percent);
+
+   BackRoller.spin(reverse,90,percent); 
+
+    wait(5,seconds);
+
+   ConveyorBelt.stop();
+
+   BackRoller.stop();
+
+   FrontIntake.stop();
+
+   drive(30,3);
+
+    FrontIntake.spin(forward,90,percent);
+
+    ConveyorBelt.spin(forward,90,percent);
+
+   BackRoller.spin(forward,90,percent); 
+
+    wait(5,seconds);
+
+   ConveyorBelt.stop();
+
+   BackRoller.stop();
+
+   FrontIntake.stop();
 }
